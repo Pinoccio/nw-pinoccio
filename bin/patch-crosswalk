@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+
+var root = process.argv[2]||'';
+
+
+var fs = require('fs');
+var nwversion = require('nw/package.json').version;
+var pregyp = root+"/node_modules/node-pre-gyp/lib/util"
+
+var nw = JSON.parse(fs.readFileSync(pregyp+'/nw_crosswalk.json'));
+var abi = JSON.parse(fs.readFileSync(pregyp+'/abi_crosswalk.json'));
+
+if(!nw[nwversion]){
+  nw[nwversion] = '0.12.0';
+  fs.writeFileSync(pregyp+'/nw_crosswalk.json',JSON.stringify(nw,null,' ')+"\n");
+  console.log('updated nw_crosswalk');
+
+} else {
+  console.log('nw_crosswalk is up to date')
+}
+
+if(!abi[nw[nwversion]]){
+  abi[nw[nwversion]] = {
+    node_abi:14,
+    v8:"3.28"
+  };
+
+  fs.writeFileSync(pregyp+'/abi_crosswalk.json',JSON.stringify(abi,null,' ')+"\n");
+  console.log('updated abi_crosswalk');
+} else {
+  console.log('abi_crosswalk is up to date')
+}
+
+process.exit(0);

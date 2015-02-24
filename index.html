@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>pinoccio gui server</title>
+  </head>
+  <body>
+    hi im an app
+    <script>
+    require('./client');
+    //var server = require('pinoccio-server');
+
+    var bridge = require('pinoccio/lib/commands/bridge')
+    //module.exports = function(args,api,config,cb){
+
+    bridge({_:[]},{},{},function(){
+      console.log('bridge callback!');
+    });
+
+    </script>
+  </body>
+</html>
+
+
+
